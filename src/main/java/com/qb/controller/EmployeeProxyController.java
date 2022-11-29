@@ -69,6 +69,9 @@ public class EmployeeProxyController {
 		int count = empList.stream().filter(emp -> emp.getPermanent_address().getPin_code().equals(pin) || emp.getCurrent_address().getPin_code().equals(pin)).collect(Collectors.toList()).size();
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
+		if(count == 0) {
+			return new ResponseEntity<>(count, responseHeaders, HttpStatus.NOT_FOUND);
+		}
 		 return new ResponseEntity<>(count, responseHeaders, HttpStatus.OK);
 	}
 	
@@ -148,10 +151,10 @@ public class EmployeeProxyController {
 		
 		Map<Integer, Integer> empLeavesMap = new HashMap<>();
 		for (Leaves leaves : leavesByYearList) {
-			if(empLeavesMap.get(leaves.getEmp_id()) == null) {
-				empLeavesMap.put(leaves.getEmp_id(), leaves.getNo_of_days());
+			if(empLeavesMap.get(leaves.getEmp_id().getId()) == null) {
+				empLeavesMap.put(leaves.getEmp_id().getId(), leaves.getNo_of_days());
 			}else {
-				empLeavesMap.put(leaves.getEmp_id(), leaves.getNo_of_days() + empLeavesMap.get(leaves.getEmp_id()));
+				empLeavesMap.put(leaves.getEmp_id().getId(), leaves.getNo_of_days() + empLeavesMap.get(leaves.getEmp_id().getId()));
 			}
 		}
 		

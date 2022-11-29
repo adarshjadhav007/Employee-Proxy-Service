@@ -68,7 +68,7 @@ public class EmpSalaryController {
 //            }
 //        }
 		
-		Employee maxSalEmpObj = restTemplate.getForObject("http://localhost:8081/getemployeedetails/"+empsal.get().getEmp_id(), Employee.class);
+		Employee maxSalEmpObj = restTemplate.getForObject("http://localhost:8081/getemployeedetails/"+empsal.get().getEmp_id().getId(), Employee.class);
 		
 		System.out.println("Hello:"+maxSalEmpObj);
 		
@@ -96,10 +96,10 @@ public class EmpSalaryController {
 		
 		Map<Integer, Long> empSalMap = new HashMap<>();
 		for (Salary salary : empList) {
-			if(empSalMap.get(salary.getEmp_id()) == null) {
-				empSalMap.put(salary.getEmp_id(), salary.getTotal());
+			if(empSalMap.get(salary.getEmp_id().getId()) == null) {
+				empSalMap.put(salary.getEmp_id().getId(), salary.getTotal());
 			}else {
-				empSalMap.put(salary.getEmp_id(), salary.getTotal() + empSalMap.get(salary.getEmp_id()));
+				empSalMap.put(salary.getEmp_id().getId(), salary.getTotal() + empSalMap.get(salary.getEmp_id().getId()));
 			}
 		}
 		
